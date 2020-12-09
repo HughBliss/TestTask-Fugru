@@ -1,22 +1,22 @@
-import { ERROR_SDATA, REQUEST_SDATA, SUCCES_SDATA } from '../const'
+import { ERROR_SDATA, REQUEST_SDATA, SUCCES_SDATA } from '../../const'
 
 const initialState = {
   data: [],
-  isFetchingSmallData: false,
+  isFetchingSmallData: false
 }
 
-export function smallDataTableUser(state = initialState, action) {
+export const smallDataTableUser = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_SDATA:
       return {
         ...state,
-        isFetchingSmallData: true,
+        isFetchingSmallData: true
       }
     case SUCCES_SDATA:
       return {
         ...state,
         data: action.data,
-        isFetchingSmallData: false,
+        isFetchingSmallData: false
       }
     case ERROR_SDATA:
       return {
@@ -28,10 +28,10 @@ export function smallDataTableUser(state = initialState, action) {
             firstName: null,
             lastName: null,
             phone: null,
-            address: null,
-          },
+            address: null
+          }
         ],
-        isFetchingSmallData: false,
+        isFetchingSmallData: false
       }
     default:
       return {
@@ -42,9 +42,9 @@ export function smallDataTableUser(state = initialState, action) {
             firstName: null,
             lastName: null,
             phone: null,
-            address: null,
-          },
-        ],
+            address: null
+          }
+        ]
       }
   }
 }

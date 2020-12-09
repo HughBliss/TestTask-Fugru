@@ -1,21 +1,21 @@
-import { REQUEST_BDATA, SUCCES_BDATA } from '../const'
+import { REQUEST_BDATA, SUCCES_BDATA } from '../../const'
 
 const initialState = {
   bigData: [],
-  isFetchingBigData: false,
+  isFetchingBigData: false
 }
 
-export function bigData(state = initialState, action) {
+export const bigData = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_BDATA:
       return {
         ...state,
-        isFetchingBigData: true,
+        isFetchingBigData: true
       }
     case SUCCES_BDATA:
       return {
         ...state,
-        isFetchingBigData: false,
+        isFetchingBigData: false
       }
     default:
       return state

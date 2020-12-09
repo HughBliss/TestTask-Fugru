@@ -1,11 +1,12 @@
+// eslint-disable-next-line no-unused-vars
 import React, { memo, useState, useEffect } from 'react'
 
-export const TableSmallDataUser = memo((props) => {
+const component = (props) => {
   console.log(props)
   const logSortBtn = (event) => {
     console.log(event.target.innerHTML)
   }
-  let tableSmall32 = props.dataUserSmall.map((index, key) => {
+  const tableSmall32 = props.dataUserSmall.map((index, key) => {
     return (
       <tr key={key}>
         <td>{index.id}</td>
@@ -17,7 +18,7 @@ export const TableSmallDataUser = memo((props) => {
     )
   })
 
-  let upperMainTableSmall32 = Object.keys(props.dataUserSmall[0]).map(
+  const upperMainTableSmall32 = Object.keys(props.dataUserSmall[0]).map(
     (index, key) => {
       console.log(index)
       if (index !== 'address' && index !== 'description') {
@@ -27,18 +28,19 @@ export const TableSmallDataUser = memo((props) => {
           </td>
         )
       } else {
-        return <td></td>
+        return <td />
       }
-    },
+    }
   )
   return (
-    <React.Fragment>
+    <>
       <table>
         <thead>
           <tr>{upperMainTableSmall32}</tr>
         </thead>
         <tbody>{tableSmall32}</tbody>
       </table>
-    </React.Fragment>
+    </>
   )
-})
+}
+export const TableSmallDataUser = memo(component)

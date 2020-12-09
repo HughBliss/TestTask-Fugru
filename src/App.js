@@ -1,52 +1,53 @@
-import './styles/App.css'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { getSmallDataTableUser } from './action/getSmallDataTableUser'
-import { SmallDataTablePage } from './SmallDataTablePage/SmallDataTablePage'
+import { getSmallDataTableUser } from './store/action/getSmallDataTableUser'
+import { SmallDataTablePage } from './components/SmallDataTablePage'
 import {
   BrowserRouter as Router,
   Route,
   NavLink,
-  Switch,
+  Switch
 } from 'react-router-dom'
+import { object } from 'prop-types'
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
-      choice: '',
+      choice: ''
     }
   }
 
-  render() {
+  render () {
     console.log(this.props)
     const { getSmallDataTableUser, smallDataTableUser } = this.props
     return (
-      <div className="App">
+      <div className='App'>
         <Router>
           <NavLink
-            to="/small_table"
+            to='/small_table'
             onClick={() => {
+              /* TODO: move to on create */
               getSmallDataTableUser()
             }}
           >
             <button> Маленький объем данных</button>
           </NavLink>
-          <NavLink to="/big_table">
+          <NavLink to='/big_table'>
             <button>Большой объем данных</button>
           </NavLink>
 
           <Switch>
-            <Route path="/small_table">
+            <Route path='/small_table'>
               <SmallDataTablePage
                 getSmallDataTableUser={getSmallDataTableUser}
                 smallDataTableUser={smallDataTableUser}
               />
             </Route>
-            <Route path="/big_table">
+            <Route path='/big_table'>
               <h1>Большая таблица</h1>
             </Route>
-            <Route path="/">
+            <Route path='/'>
               <h1>Выберите объем данных</h1>
             </Route>
           </Switch>
@@ -56,14 +57,18 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  getSmallDataTableUser: object, smallDataTableUser: object
+}
+
 const mapStateToProps = (store) => {
   return {
-    smallDataTableUser: store.smallDataTableUser,
+    smallDataTableUser: store.smallDataTableUser
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getSmallDataTableUser: () => dispatch(getSmallDataTableUser()),
+  getSmallDataTableUser: () => dispatch(getSmallDataTableUser())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

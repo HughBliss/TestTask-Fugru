@@ -1,4 +1,6 @@
-import { ERROR_DATA, REQUEST_DATA, SORT_TABLE, SUCCESS_DATA } from '../consts'
+import { ERROR_DATA, REQUEST_DATA, SEARCH, SORT_TABLE, SUCCESS_DATA, tableSortingFields } from '../consts'
+
+const tableFieldsArray = Object.keys(tableSortingFields)
 
 const initialState = {
   data: [],
@@ -42,6 +44,23 @@ export const dataTableReducer = (state = initialState, { type, data }) => {
         ...state,
         sortingBy: data,
         data: state.data.slice().sort(dynamicSort(data))
+      }
+    case SEARCH:
+      return {
+        ...state,
+        data: state.data.map(row => {
+          let isValid = false
+          for (let i = 0; i < tableFieldsArray.length; i++) {
+            if (row[tableFieldsArray[i]] && String(row[tableFieldsArray[i]]).search(data) !== -1) {
+              isValid = true
+              break
+            }
+          }
+          return {
+            ...row,
+            isValid
+          }
+        })
       }
     default:
       return {

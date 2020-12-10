@@ -1,4 +1,4 @@
-import { REQUEST_DATA, SUCCESS_DATA, ERROR_DATA, SORT_TABLE } from '../consts'
+import { REQUEST_DATA, SUCCESS_DATA, ERROR_DATA } from '../consts'
 import { fetchData } from '../../apiRequests'
 
 export const getDataFromApi = (rows) => {
@@ -9,21 +9,15 @@ export const getDataFromApi = (rows) => {
     fetchData({ rows }).then(data => {
       dispatch({
         type: SUCCESS_DATA,
-        data
+        data: data.map(row => ({
+          ...row,
+          isValid: true
+        }))
       })
     }).catch(_ => {
       dispatch({
         type: ERROR_DATA
       })
-    })
-  }
-}
-
-export const sortDataTable = (field) => {
-  return dispatch => {
-    dispatch({
-      type: SORT_TABLE,
-      data: field
     })
   }
 }

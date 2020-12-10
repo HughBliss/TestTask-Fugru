@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { object } from 'prop-types'
+import { tableSortingFields } from '../store/consts'
 
 class DataTableRow extends Component {
   constructor (props) {
@@ -13,11 +14,10 @@ class DataTableRow extends Component {
     return (
       <>
         <tr key={this.props.row.id} onClick={() => this.setState({ isOpen: !this.state.isOpen })}>
-          <td>{this.props.row.id}</td>
-          <td>{this.props.row.firstName}</td>
-          <td>{this.props.row.lastName}</td>
-          <td>{this.props.row.email}</td>
-          <td>{this.props.row.phone}</td>
+          {Object.entries(tableSortingFields).map(([key, value]) => {
+            return (
+              <td key={key}>{this.props.row[key]}</td>)
+          })}
         </tr>
         {this.state.isOpen && (
           <tr>

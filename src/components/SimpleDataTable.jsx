@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { number, func, array, bool, string } from 'prop-types'
-import { getDataFromApi, sortDataTable } from '../store/actions/getDataFromApi'
+import { getDataFromApi } from '../store/actions/getDataFromApi'
 import DataTableRow from './DataTableRow'
 import { tableSortingFields } from '../store/consts'
+import { sortDataTable } from '../store/actions/sortDataTable'
 
 class SimpleDataTable extends Component {
   componentDidMount () {
-    this.props.getDataFromApi(this.props.rows)
+    this.props.getDataFromApi(this.props.rowsCount)
   }
 
   render () {
@@ -45,7 +46,7 @@ class SimpleDataTable extends Component {
 }
 
 SimpleDataTable.propTypes = {
-  rows: number,
+  rowsCount: number,
   getDataFromApi: func,
   sortDataTable: func,
   dataTable: array,
@@ -55,7 +56,7 @@ SimpleDataTable.propTypes = {
 
 const mapStateToProps = ({ dataTableReducer }) => {
   return {
-    dataTable: dataTableReducer.data,
+    dataTable: dataTableReducer.data.filter(row => row.isValid),
     isLoading: dataTableReducer.isLoading,
     sortingBy: dataTableReducer.sortingBy
   }

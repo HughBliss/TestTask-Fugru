@@ -11,6 +11,6 @@ export const fetchData = ({ rows }) => request({
     email: '{email}',
     phone: '{phone|(xxx)xxx-xx-xx}',
     address: '{addressObject}',
-    description: '{description}'
+    description: '{lorem|32}'
   }
 })

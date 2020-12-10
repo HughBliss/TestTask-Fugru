@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import SimpleDataTable from './components/SimpleDataTable'
 import {
   BrowserRouter as Router,
   Route,
   NavLink,
   Switch
 } from 'react-router-dom'
+import SimpleTablePage from './views/SimpleTablePage'
 
 export class App extends Component {
   render () {
@@ -20,7 +20,7 @@ export class App extends Component {
           </NavLink>
           <Switch>
             <Route path='/small_table'>
-              <SimpleDataTable rows={32} />
+              <SimpleTablePage rowsCount={32} />
             </Route>
             <Route path='/big_table'>
               <h1>Большая таблица</h1>

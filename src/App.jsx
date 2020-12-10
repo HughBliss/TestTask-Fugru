@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { getSmallDataTableUser } from './store/action/getSmallDataTableUser'
+import { getDataFromApi } from './store/action/getDataFromApi'
 import { SmallDataTablePage } from './components/SmallDataTablePage'
 import {
   BrowserRouter as Router,
@@ -68,7 +68,7 @@ const mapStateToProps = (store) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getSmallDataTableUser: () => dispatch(getSmallDataTableUser())
+  getSmallDataTableUser: () => dispatch(getDataFromApi(32))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

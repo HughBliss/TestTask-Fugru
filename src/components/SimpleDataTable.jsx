@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { number, func, array, bool } from 'prop-types'
 import { getDataFromApi } from '../store/actions/getDataFromApi'
+import DataTableRow from './DataTableRow'
 
 class SimpleDataTable extends Component {
   componentDidMount () {
@@ -27,13 +28,7 @@ class SimpleDataTable extends Component {
           <tbody>
             {this.props.dataTable.map(row => {
               return (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
-                  <td>{row.firstName}</td>
-                  <td>{row.lastName}</td>
-                  <td>{row.email}</td>
-                  <td>{row.phone}</td>
-                </tr>
+                <DataTableRow row={row} key={row.id} />
               )
             })}
           </tbody>

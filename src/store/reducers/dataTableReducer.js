@@ -1,12 +1,25 @@
-import { ERROR_DATA, REQUEST_DATA, SUCCESS_DATA } from '../consts'
+import { ERROR_DATA, REQUEST_DATA, SORT_TABLE, SUCCESS_DATA } from '../consts'
 
 const initialState = {
   data: [],
+  sortingBy: 'id',
   isLoading: false
 }
 
-export const dataTableReducer = (state = initialState, action) => {
-  switch (action.type) {
+const dynamicSort = (field) => {
+  let sortOrder = 1
+  if (field[0] === '-') {
+    sortOrder = -1
+    field = field.substr(1)
+  }
+  return (a, b) => {
+    const result = (a[field] < b[field]) ? -1 : (a[field] > b[field]) ? 1 : 0
+    return result * sortOrder
+  }
+}
+
+export const dataTableReducer = (state = initialState, { type, data }) => {
+  switch (type) {
     case REQUEST_DATA:
       return {
         ...state,
@@ -15,36 +28,26 @@ export const dataTableReducer = (state = initialState, action) => {
     case SUCCESS_DATA:
       return {
         ...state,
-        data: action.data,
+        data: data.sort(dynamicSort(state.sortingBy)),
         isLoading: false
       }
     case ERROR_DATA:
       return {
-        ...state,
-        data: [
-          {
-            id: null,
-            email: null,
-            firstName: null,
-            lastName: null,
-            phone: null,
-            address: null
-          }
-        ],
+        sortingBy: 'id',
+        data: [],
         isLoading: false
+      }
+    case SORT_TABLE:
+      return {
+        ...state,
+        sortingBy: data,
+        data: state.data.slice().sort(dynamicSort(data))
       }
     default:
       return {
-        data: [
-          {
-            id: null,
-            email: null,
-            firstName: null,
-            lastName: null,
-            phone: null,
-            address: null
-          }
-        ]
+        sortingBy: 'id',
+        data: [],
+        isLoading: false
       }
   }
 }

@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { number, func, array, bool } from 'prop-types'
-import { getDataFromApi } from '../store/actions/getDataFromApi'
+import { number, func, array, bool, string } from 'prop-types'
+import { getDataFromApi, sortDataTable } from '../store/actions/getDataFromApi'
 import DataTableRow from './DataTableRow'
+import { tableSortingFields } from '../store/consts'
 
 class SimpleDataTable extends Component {
   componentDidMount () {
@@ -11,18 +12,24 @@ class SimpleDataTable extends Component {
 
   render () {
     return this.props.isLoading
-      ? (
-        <p>Загрузка...</p>
-        )
+      ? (<p>Загрузка...</p>)
       : (
         <table>
           <thead>
             <tr>
-              <td>Id</td>
-              <td>First name</td>
-              <td>Last name</td>
-              <td>Email</td>
-              <td>Phone</td>
+              {Object.entries(tableSortingFields).map(([key, value]) => {
+                return (
+                  <td
+                    key={key} onClick={() => {
+                      this.props.sortDataTable(key === this.props.sortingBy ? '-' + key : key)
+                    }}
+                  >
+                    {value}
+                    {key === this.props.sortingBy ? '↓' : ''}
+                    {'-' + key === this.props.sortingBy ? '↑' : ''}
+                  </td>
+                )
+              })}
             </tr>
           </thead>
           <tbody>
@@ -40,19 +47,23 @@ class SimpleDataTable extends Component {
 SimpleDataTable.propTypes = {
   rows: number,
   getDataFromApi: func,
+  sortDataTable: func,
   dataTable: array,
-  isLoading: bool
+  isLoading: bool,
+  sortingBy: string
 }
 
 const mapStateToProps = ({ dataTableReducer }) => {
   return {
     dataTable: dataTableReducer.data,
-    isLoading: dataTableReducer.isLoading
+    isLoading: dataTableReducer.isLoading,
+    sortingBy: dataTableReducer.sortingBy
   }
 }
 
 const mapDispatchToProps = {
-  getDataFromApi
+  getDataFromApi,
+  sortDataTable
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SimpleDataTable)

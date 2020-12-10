@@ -1,24 +1,24 @@
-import { ERROR_SDATA, REQUEST_SDATA, SUCCES_SDATA } from '../../const'
+import { ERROR_DATA, REQUEST_DATA, SUCCESS_DATA } from '../consts'
 
 const initialState = {
   data: [],
-  isFetchingSmallData: false
+  isLoading: false
 }
 
-export const smallDataTableUser = (state = initialState, action) => {
+export const dataTableReducer = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_SDATA:
+    case REQUEST_DATA:
       return {
         ...state,
-        isFetchingSmallData: true
+        isLoading: true
       }
-    case SUCCES_SDATA:
+    case SUCCESS_DATA:
       return {
         ...state,
         data: action.data,
-        isFetchingSmallData: false
+        isLoading: false
       }
-    case ERROR_SDATA:
+    case ERROR_DATA:
       return {
         ...state,
         data: [
@@ -31,7 +31,7 @@ export const smallDataTableUser = (state = initialState, action) => {
             address: null
           }
         ],
-        isFetchingSmallData: false
+        isLoading: false
       }
     default:
       return {

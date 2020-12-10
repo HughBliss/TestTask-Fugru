@@ -5,7 +5,7 @@ export const fetchData = ({ rows }) => request({
   method: 'get',
   params: {
     rows,
-    id: '{number|1000}',
+    id: '{index}',
     firstName: '{firstName}',
     lastName: '{lastName}',
     email: '{email}',

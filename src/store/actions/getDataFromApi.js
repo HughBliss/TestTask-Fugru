@@ -1,19 +1,19 @@
-import { REQUEST_SDATA, SUCCES_SDATA, ERROR_SDATA } from '../../const'
+import { REQUEST_DATA, SUCCESS_DATA, ERROR_DATA } from '../consts'
 import { fetchData } from '../../apiRequests'
 
 export function getDataFromApi (rows) {
   return (dispatch) => {
     dispatch({
-      type: REQUEST_SDATA
+      type: REQUEST_DATA
     })
     fetchData({ rows }).then(data => {
       dispatch({
-        type: SUCCES_SDATA,
+        type: SUCCESS_DATA,
         data
       })
     }).catch(_ => {
       dispatch({
-        type: ERROR_SDATA
+        type: ERROR_DATA
       })
     })
   }

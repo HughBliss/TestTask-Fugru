@@ -1,48 +1,26 @@
-import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { getDataFromApi } from './store/action/getDataFromApi'
-import { SmallDataTablePage } from './components/SmallDataTablePage'
+import SimpleDataTable from './components/SimpleDataTable'
 import {
   BrowserRouter as Router,
   Route,
   NavLink,
   Switch
 } from 'react-router-dom'
-import { object } from 'prop-types'
 
-class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      choice: ''
-    }
-  }
-
+export class App extends Component {
   render () {
-    console.log(this.props)
-    const { getSmallDataTableUser, smallDataTableUser } = this.props
     return (
       <div className='App'>
         <Router>
-          <NavLink
-            to='/small_table'
-            onClick={() => {
-              /* TODO: move to on create */
-              getSmallDataTableUser()
-            }}
-          >
+          <NavLink to='/small_table'>
             <button> Маленький объем данных</button>
           </NavLink>
           <NavLink to='/big_table'>
             <button>Большой объем данных</button>
           </NavLink>
-
           <Switch>
             <Route path='/small_table'>
-              <SmallDataTablePage
-                getSmallDataTableUser={getSmallDataTableUser}
-                smallDataTableUser={smallDataTableUser}
-              />
+              <SimpleDataTable rows={32} />
             </Route>
             <Route path='/big_table'>
               <h1>Большая таблица</h1>
@@ -56,19 +34,3 @@ class App extends Component {
     )
   }
 }
-
-App.propTypes = {
-  getSmallDataTableUser: object, smallDataTableUser: object
-}
-
-const mapStateToProps = (store) => {
-  return {
-    smallDataTableUser: store.smallDataTableUser
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-  getSmallDataTableUser: () => dispatch(getDataFromApi(32))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,7 +1,11 @@
 
-import { applyMiddleware, createStore } from 'redux'
-import { allReducers } from './configureStore'
+import { applyMiddleware, createStore, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
+import { dataTableReducer } from './reducers/dataTableReducer'
 
-export const store = createStore(allReducers, applyMiddleware(thunk, logger))
+const reducers = combineReducers({
+  dataTableReducer
+})
+
+export const store = createStore(reducers, applyMiddleware(thunk, logger))

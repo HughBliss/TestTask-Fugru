@@ -2,7 +2,7 @@ import axios from 'axios'
 import { API_URL } from '../environment'
 
 const service = axios.create({
-  baseURL: API_URL || 'https://localhost:3001/api',
+  baseURL: API_URL,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ service.interceptors.response.use(
     // }
   },
   error => {
-    /* uncomment to use ui handle error */
+    /* uncomment if use ui handle error */
     // Message({
     //   message: error.message,
     //   type: 'error',

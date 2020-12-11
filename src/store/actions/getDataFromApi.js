@@ -1,4 +1,4 @@
-import { REQUEST_DATA, SUCCESS_DATA, ERROR_DATA } from '../consts'
+import { REQUEST_DATA, SUCCESS_DATA, ERROR_DATA, SET_PAGE_COUNT } from '../consts'
 import { fetchData } from '../../apiRequests'
 
 export const getDataFromApi = (rows) => {
@@ -13,6 +13,9 @@ export const getDataFromApi = (rows) => {
           ...row,
           isValid: true
         }))
+      })
+      dispatch({
+        type: SET_PAGE_COUNT
       })
     }).catch(_ => {
       dispatch({

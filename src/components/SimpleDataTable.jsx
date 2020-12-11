@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { number, func, array, bool, string } from 'prop-types'
 import { getDataFromApi } from '../store/actions/getDataFromApi'
-import DataTableRow from './DataTableRow'
 import { tableSortingFields } from '../store/consts'
 import { sortDataTable } from '../store/actions/sortDataTable'
+import DataTableRow from './DataTableRow'
 
 class SimpleDataTable extends Component {
   componentDidMount () {
@@ -34,7 +34,7 @@ class SimpleDataTable extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.dataTable.map(row => {
+            {this.props.dataTable[this.props.currentPage] && this.props.dataTable[this.props.currentPage].map(row => {
               return (
                 <DataTableRow row={row} key={row.id} />
               )
@@ -51,14 +51,16 @@ SimpleDataTable.propTypes = {
   sortDataTable: func,
   dataTable: array,
   isLoading: bool,
-  sortingBy: string
+  sortingBy: string,
+  currentPage: number
 }
 
 const mapStateToProps = ({ dataTableReducer }) => {
   return {
-    dataTable: dataTableReducer.data.filter(row => row.isValid),
+    dataTable: dataTableReducer.data,
     isLoading: dataTableReducer.isLoading,
-    sortingBy: dataTableReducer.sortingBy
+    sortingBy: dataTableReducer.sortingBy,
+    currentPage: dataTableReducer.currentPage
   }
 }
 

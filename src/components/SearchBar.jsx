@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { func } from 'prop-types'
-// import { getDataFromApi, sortDataTable } from '../store/actions/getDataFromApi'
 import { connect } from 'react-redux'
 import { filterDatableByPhrase } from '../store/actions/filterDatableByPhrase'
 
@@ -42,12 +41,9 @@ SearchBar.propTypes = {
   filterDatableByPhrase: func
 }
 
-const mapStateToProps = ({ dataTableReducer }) => {
-  return {}
-}
-
 const mapDispatchToProps = {
   filterDatableByPhrase
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar)
+export default connect(() => {
+}, mapDispatchToProps)(SearchBar)

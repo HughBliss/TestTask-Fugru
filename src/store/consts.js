@@ -5,6 +5,7 @@ export const SORT_TABLE = 'SORT_TABLE'
 export const SEARCH = 'SEARCH'
 export const MOVE_TO_PAGE = 'MOVE_TO_PAGE'
 export const SET_PAGE_COUNT = 'SET_PAGE_COUNT'
+export const ADD_NEW_USER = 'ADD_NEW_USER'
 
 export const ONE_PAGE_SIZE = 16
 

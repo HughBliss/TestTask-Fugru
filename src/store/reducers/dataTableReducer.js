@@ -1,4 +1,5 @@
 import {
+  ADD_NEW_USER,
   ERROR_DATA, MOVE_TO_PAGE,
   ONE_PAGE_SIZE,
   REQUEST_DATA,
@@ -10,6 +11,7 @@ import {
 } from '../consts'
 import { dynamicSort } from '../../utils/dynamicSort'
 import { splitArray } from '../../utils/splitArray'
+import { checkRowValidForSearch } from '../../utils/checkRowValidForSearch'
 
 const tableFieldsArray = Object.keys(tableSortingFields)
 
@@ -42,8 +44,14 @@ export const dataTableReducer = (state = initialState, { type, data }) => {
         ...state,
         pageCount: state.data.length
       }
-    case ERROR_DATA:
-      return initialState
+    case ADD_NEW_USER:
+      return {
+        ...state,
+        data: [
+          data,
+          ...state.data.flat()
+        ].reduce(splitArray(ONE_PAGE_SIZE), [])
+      }
     case SORT_TABLE:
       return {
         ...state,
@@ -60,19 +68,7 @@ export const dataTableReducer = (state = initialState, { type, data }) => {
         data: state.data
           .flat()
           .slice()
-          .map(row => {
-            let isValid = false
-            for (let i = 0; i < tableFieldsArray.length; i++) {
-              if (row[tableFieldsArray[i]] && String(row[tableFieldsArray[i]]).search(data) !== -1) {
-                isValid = true
-                break
-              }
-            }
-            return {
-              ...row,
-              isValid
-            }
-          })
+          .map(checkRowValidForSearch(tableFieldsArray, data))
           .sort(dynamicSort('-isValid'))
           .reduce(splitArray(ONE_PAGE_SIZE), [])
       }
@@ -81,6 +77,8 @@ export const dataTableReducer = (state = initialState, { type, data }) => {
         ...state,
         currentPage: data
       }
+    case ERROR_DATA:
+      return initialState
     default:
       return initialState
   }
